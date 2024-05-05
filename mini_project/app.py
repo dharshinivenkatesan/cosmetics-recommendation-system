@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the dataset (replace 'cosmetics.csv' with your actual CSV file path)
-df = pd.read_csv('cosmetics.csv')
+df = pd.read_csv('mini_project/cosmetics.csv')
 
 # Define the options for product types
 product_types = ['Moisturizer', 'Cleanser', 'Treatment', 'Face Mask', 'Eye cream', 'Sun protect']
