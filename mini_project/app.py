@@ -32,7 +32,7 @@ if not filtered_products.empty:
     st.header(f"Recommended Cosmetic for {selected_skin_type} skin, under the {selected_product_type} category:")
     st.write(f"Name: {recommended_cosmetic['Name'].values[0]}")
     st.write(f"Brand: {recommended_cosmetic['Brand'].values[0]}")
-    st.write(f"Price: ${recommended_cosmetic['Price'].values[0]:.2f}")  # Format price with two decimal places and dollar symbol
+    st.write(f"Price: ${int(recommended_cosmetic['Price'].values[0])}")  # Format price as integer with dollar symbol
     st.write(f"Ingredients: {recommended_cosmetic['Ingredients'].values[0]}")
 else:
     st.warning(f"No {selected_product_type.lower()} suitable for {selected_skin_type.lower()} skin found.")
