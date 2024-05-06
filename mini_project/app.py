@@ -18,18 +18,13 @@ skin_type_options = ['Dry', 'Normal', 'Oily', 'Sensitive', 'Combination']
 selected_skin_type = st.selectbox("Select your skin type:", options=skin_type_options)
 
 # Ask the user if they want to filter by price
-price_filter_selection = st.radio("Do you want to filter by price?", ('Yes', 'No'))
+price_filter_selection = st.radio("Do you want to filter by price?", ('Less than $70', 'More than $70'))
 
-# Filter products based on skin type
-filtered_products = products_for_product_type[products_for_product_type[selected_skin_type.capitalize()] == 1]
-
-# Filter products by price if selected
-if price_filter_selection == 'Yes':
-    price_range_selection = st.radio("Select the price range:", ('Less than 70', 'More than 70'))
-    if price_range_selection == 'Less than 70':
-        filtered_products = filtered_products[filtered_products['Price'] < 70]
-    else:
-        filtered_products = filtered_products[filtered_products['Price'] > 70]
+# Extract price range based on user selection
+if price_filter_selection == 'Less than $70':
+    filtered_products = products_for_product_type[products_for_product_type['Price'] < 70]
+else:
+    filtered_products = products_for_product_type[products_for_product_type['Price'] > 70]
 
 # Display recommended cosmetic if available
 if not filtered_products.empty:
