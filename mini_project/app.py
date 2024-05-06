@@ -27,9 +27,9 @@ filtered_products = products_for_product_type[products_for_product_type[selected
 if price_filter_selection == 'Yes':
     price_range_selection = st.radio("Select the price range:", ('Less than 70', 'More than 70'))
     if price_range_selection == 'Less than 70':
-        filtered_products = filtered_products[filtered_products['Price'] < $70]
+        filtered_products = filtered_products[filtered_products['Price'] < 70]
     else:
-        filtered_products = filtered_products[filtered_products['Price'] > $70]
+        filtered_products = filtered_products[filtered_products['Price'] > 70]
 
 # Display recommended cosmetic if available
 if not filtered_products.empty:
@@ -37,7 +37,7 @@ if not filtered_products.empty:
     st.header(f"Recommended Cosmetic for {selected_skin_type} skin, under the {selected_product_type} category:")
     st.write(f"Name: {recommended_cosmetic['Name'].values[0]}")
     st.write(f"Brand: {recommended_cosmetic['Brand'].values[0]}")
-    st.write(f"Price: ${recommended_cosmetic['Price'].values[0]}")  # Add dollar symbol to price
+    st.write(f"Price: ${recommended_cosmetic['Price'].values[0]:.2f}")  # Format price with two decimal places and dollar symbol
     st.write(f"Ingredients: {recommended_cosmetic['Ingredients'].values[0]}")
 else:
     st.warning(f"No {selected_product_type.lower()} suitable for {selected_skin_type.lower()} skin found.")
