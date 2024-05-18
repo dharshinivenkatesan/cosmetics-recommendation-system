@@ -18,7 +18,7 @@ skin_type_options = ['Dry', 'Normal', 'Oily', 'Sensitive', 'Combination']
 selected_skin_type = st.selectbox("Select your skin type:", options=skin_type_options)
 
 # Ask the user if they want to filter by price
-price_filter_selection = st.radio("Do you want to filter by price?", ('Less than $70', 'More than $70'))
+price_filter_selection = st.radio("Please select one to filter by price:", ('Less than $70', 'More than $70'))
 
 # Extract price range based on user selection
 if price_filter_selection == 'Less than $70':
