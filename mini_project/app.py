@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Load the dataset (replace 'cosmetics.csv' with your actual CSV file path)
+# Load the dataset
 df = pd.read_csv('mini_project/cosmetics.csv')
 
 # Define the options for product types
