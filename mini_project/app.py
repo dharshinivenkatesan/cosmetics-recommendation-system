@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import joblib
+import pickle
 import urllib.parse
 
 # Load the dataset
@@ -38,7 +38,8 @@ if st.button("Submit"):
     # Display recommended cosmetic if available
     if not products_for_product_type.empty:
         # Load pre-trained model
-        model = joblib.load('pretrained_model.pkl')
+        with open('pretrained_model.pkl', 'rb') as f:
+            model = pickle.load(f)
 
         # Predict recommended cosmetic
         input_features = [1 if skin_type_from_quiz == label else 0 for label in ['Oily', 'Dry', 'Normal', 'Sensitive', 'Combination']]
