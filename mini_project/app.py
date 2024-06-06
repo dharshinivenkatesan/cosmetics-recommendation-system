@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder
 
 # Load the dataset
 df = pd.read_csv('mini_project/cosmetics.csv')
@@ -32,8 +32,7 @@ for skin_type in targets.columns:
     models[skin_type] = model
 
 # Streamlit app
-product_types = LabelEncoder().fit(df['Label']).classes_
-product_types = [ptype.title() for ptype in product_types]
+st.title("Cosmetics Recommendation System")
 
 # Get skin type from query parameter
 query_params = st.experimental_get_query_params()
@@ -43,6 +42,8 @@ skin_type = query_params.get("skin_type", ["Combination"])[0]  # Default to 'Com
 st.write(f"Detected Skin Type: {skin_type}")
 
 # Ask the user to select the type of product
+product_types = LabelEncoder().fit(df['Label']).classes_
+product_types = [ptype.title() for ptype in product_types]
 selected_product_type = st.selectbox("Select the type of product:", options=product_types)
 
 # Filter products by the selected product type
