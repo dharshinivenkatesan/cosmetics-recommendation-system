@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import LabelEncoder
+import joblib
 import urllib.parse
 
 # Load the dataset
@@ -38,22 +37,14 @@ if st.button("Submit"):
 
     # Display recommended cosmetic if available
     if not products_for_product_type.empty:
-        # Prepare the data for training
-        X = df[['Oily', 'Dry', 'Normal', 'Sensitive', 'Combination', 'Moisturizer', 'Cleanser', 'Treatment', 'Face Mask', 'Eye cream', 'Sun protect']]
-        y = df['Label']
-        # Encode labels
-        label_encoder = LabelEncoder()
-        y_encoded = label_encoder.fit_transform(y)
-        # Train Logistic Regression model
-        model = LogisticRegression()
-        model.fit(X, y_encoded)
+        # Load pre-trained model
+        model = joblib.load('pretrained_model.pkl')
 
         # Predict recommended cosmetic
         input_features = [1 if skin_type_from_quiz == label else 0 for label in ['Oily', 'Dry', 'Normal', 'Sensitive', 'Combination']]
         input_features += [1 if selected_product_type == label else 0 for label in ['Moisturizer', 'Cleanser', 'Treatment', 'Face Mask', 'Eye cream', 'Sun protect']]
         input_features = [input_features]
-        predicted_label = model.predict(input_features)
-        recommended_product = label_encoder.inverse_transform(predicted_label)[0]
+        recommended_product = model.predict(input_features)[0]
 
         st.header(f"Recommended Cosmetic for {skin_type_from_quiz} skin, under the {selected_product_type} category:")
         st.write(f"Product Type: {recommended_product}")
