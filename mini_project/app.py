@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import urllib.parse
 
 # Load the dataset
 df = pd.read_csv('mini_project/cosmetics.csv')
@@ -13,9 +14,12 @@ selected_product_type = st.selectbox("Select the type of product:", options=prod
 # Filter products by the selected product type
 products_for_product_type = df[df['Label'] == selected_product_type]
 
-# Ask the user for their skin type
-skin_type_options = ['Dry', 'Normal', 'Oily', 'Sensitive', 'Combination']
-selected_skin_type = st.selectbox("Select your skin type:", options=skin_type_options)
+# Get the skin type from the query parameters
+query_params = st.experimental_get_query_params()
+selected_skin_type = query_params.get('skin_type', ['Normal'])[0]  # Default to 'Normal' if not provided
+
+# Display the selected skin type
+st.write(f"Selected Skin Type: {selected_skin_type}")
 
 # Ask the user if they want to filter by price
 price_filter_selection = st.radio("Please select one to filter by price:", ('Less than $70', 'More than $70'))
@@ -25,6 +29,9 @@ if price_filter_selection == 'Less than $70':
     filtered_products = products_for_product_type[products_for_product_type['Price'] < 70]
 else:
     filtered_products = products_for_product_type[products_for_product_type['Price'] > 70]
+
+# Further filter by skin type if applicable
+filtered_products = filtered_products[filtered_products['Skin Type'] == selected_skin_type]
 
 # Display recommended cosmetic if available
 if not filtered_products.empty:
